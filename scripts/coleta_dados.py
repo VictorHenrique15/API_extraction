@@ -1,40 +1,28 @@
-import requests
-from dotenv import load_dotenv
-import os
+import requests # PARA FAZER REQUISIÇÕES NA API
+from dotenv import load_dotenv # CARREGA VARIÁVEIS DE AMBIENTE DO ARQUIVO .ENV COMO SENHAS E CAHVES DE API
+import os # PERMITE ACESSAR AS VARIÁVEIS DE AMBIENTE QUE FORAM CARREGADAS NO ARQUIVO .ENV
 
-# VARIÁVEL QUE DEFINE A MINHA CHAVE DA API NASA
-CHAVE_API = os.getenv('NASA_API_KEY') 
-# URL DA API COM A VARAIVEL DEFINIDA DA CHAVE
-url = f'https://api.nasa.gov/planetary/apod?api_key={CHAVE_API}'
+load_dotenv()
 
-# ENVIA REQUISIÇÃO (GET) PARA A URL DA API E ARMAZENA A RESPOSTA NA VARIÁVEL RESPONSE
-response = requests.get(url)
+# INICIA A FUNÇÃO DE COLETA DE DADOS
+def coleta_dados(): # FUNÇÃO PARA COLETAR DADOS DA API NASA 
+    CHAVE_API = os.getenv('NASA_API_KEY') # VARIÁVEL QUE DEFINE A CHAVE DA API NASA
+    url = f'https://api.nasa.gov/planetary/apod?api_key={CHAVE_API}'  # URL DA API COM A VARAIVEL DEFINIDA DA CHAVE
+    response = requests.get(url) # ENVIA REQUISIÇÃO (GET) PARA A URL DA API E ARMAZENA A RESPOSTA NA VARIÁVEL RESPONSE
 
-# CONVERTE A RESPOSTA PARA JSON E ARMAZENA NA VARIÁVEL DATA 
-data = response.json()
+    return response # FIM DA FUNÇÃO
 
-# IMPRIME O CONTEÚDO DA VARIÁVEL DATA
-print(data)
+response = coleta_dados() # FAZ REQUISIÇÃO E ARMAZENA NA VARIÁVEL RESPONSE
 
-# VALIDANDO E TRATANDO DADOS
+# INICIA VALIDAÇÃO E TRATANDO DE DADOS
+if response.status_code == 200:  # VERIFICA SE A REQUISIÇÃO FOI BEM SUCEDIDA
+    try:
+        data = response.json()
+        print(data.get("title"))
+    except ValueError:
+        print("Erro: resposta não está em formato JSON.")
+        print("Conteúdo bruto:", response.text)
 
-# VERIFICA SE A REQUISIÇÃO FOI BEM SUCEDIDA (CÓDIGO 200)
-if response.status_code == 200:
-
-# RESPONDE COM SUCESSO CASO SEJA 200
-    print("Requisição bem sucedida!")
-
-# IMPRIME O TÍTULO, DATA E URL DA IMAGEM
-    print("Título:", data.get('title'))
-
-# IMPRIME A DATA DA IMAGEM
-    print("Data:", data.get('date'))
-
-# IMPRIME A URL DA IMAGEM
-    print("URL da imagem:", data.get('url'))
-    
-# UTILIZAR .GET POIS É MAIS SEGURO, NÃO LEVA A ERRO CASO A CHAVE NÃO EXISTA, APENAS RETORNA NONE
-
-# RESPONDE COM FALHA CASO NÃO SEJA 200    
 else:
-    print("Erro ao acessar a API", response.status_code)
+    print("Erro ao acessar a API", response.status_code)  # RESPONDE COM FALHA CASO NÃO SEJA 200
+
