@@ -49,4 +49,4 @@ Este projeto foi desenvolvido com foco em aprendizado e construção de portfól
 
 ## Uso de Inteligência Artificial
 
-Durante o desenvolvimento deste projeto, utilizei ferramentas de Inteligência Artificial como suporte técnico e consultivo — especialmente para esclarecer dúvidas, revisar boas práticas e validar decisões. Com a IA atuando como aliada no processo de aprendizado e não como fonte de cópia e cola.
+Durante o desenvolvimento deste projeto, utilizei ferramentas de Inteligência Artificial como suporte técnico e consultivo — especialmente para esclarecer dúvidas, revisar boas práticas e validar decisões. Com a IA atuando como aliada no processo de aprendizado.
